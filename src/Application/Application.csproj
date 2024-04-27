@@ -16,4 +16,9 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CartItems\" />
+    <Folder Include="Carts\Commands\" />
+  </ItemGroup>
+
 </Project>
