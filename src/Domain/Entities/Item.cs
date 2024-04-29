@@ -10,6 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace CartingService.Domain.Entities;
 public class Item : BaseAuditableEntity
 {
+    public string? CartId { get; set; }
     public string? Name { get; set; }
     public string? ImageURL { get; set; }
     public string? ImageText { get; set; }
