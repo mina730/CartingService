@@ -3,8 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CartingService.Application.Common.Interfaces;
+using CartingService.Application.Common.Models;
+using CartingService.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 
 namespace CartingService.Application.Carts.Queries.GetCartItemsList;
-internal class GetCartItemsQuery
+public record GetCartItemsQuery : IRequest<CartDto>
 {
+    public string? CartId { get; init; }
+
 }
+public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, CartDto>
+{
+    private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
+
+    public GetCartItemsQueryHandler(IApplicationDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<CartDto> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
+    {
+        var x = await _context.Carts
+            .FirstOrDefaultAsync(x => x.CartId == request.CartId);
+        var cart = _mapper.Map<CartDto>(x);
+        return cart;
+    }
+}
+
