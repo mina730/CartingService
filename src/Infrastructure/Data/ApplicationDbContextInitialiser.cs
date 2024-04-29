@@ -104,6 +104,23 @@ public class ApplicationDbContextInitialiser
             });
 
             await _context.SaveChangesAsync();
+        } 
+
+        if (!_context.Carts.Any())
+        {
+            _context.Carts.Add(new Cart
+            {
+                CartId = "Cart Id",
+                ItemList =
+                {
+                    new Item { Name = "Make a todo list 📃" },
+                    new Item { Name = "Check off the first item ✅" },
+                    new Item { Name = "Realise you've already done two things on the list! 🤯"},
+                    new Item { Name = "Reward yourself with a nice, long nap 🏆" },
+                }
+            });
+
+            await _context.SaveChangesAsync();
         }
     }
 }
