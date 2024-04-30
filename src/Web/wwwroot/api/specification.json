@@ -37,10 +37,10 @@
         }
       }
     },
-    "/api/Items": {
+    "/api/CartItems": {
       "post": {
         "tags": [
-          "Items"
+          "CartItems"
         ],
         "operationId": "AddNewItem",
         "requestBody": {
@@ -70,10 +70,10 @@
         }
       }
     },
-    "/api/Items/{id}": {
+    "/api/CartItems/{id}": {
       "delete": {
         "tags": [
-          "Items"
+          "CartItems"
         ],
         "operationId": "DeleteItem",
         "parameters": [

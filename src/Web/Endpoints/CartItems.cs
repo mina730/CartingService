@@ -4,7 +4,7 @@ using CartingService.Application.TodoItems.Commands.DeleteTodoItem;
 
 namespace CartingService.Web.Endpoints;
 
-public class Items : EndpointGroupBase
+public class CartItems : EndpointGroupBase
 {
     public override void Map(WebApplication app)
     {
