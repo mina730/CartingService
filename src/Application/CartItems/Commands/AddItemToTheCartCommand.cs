@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CartingService.Application.Common.Interfaces;
 using CartingService.Domain.Entities;
-using CartingService.Domain.Events;
 
 namespace CartingService.Application.CartItems.Commands;
 public record AddItemToTheCartCommand : IRequest<int>

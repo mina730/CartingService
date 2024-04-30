@@ -1,6 +1,4 @@
 ﻿using CartingService.Application.CartItems.Commands;
-using CartingService.Application.TodoItems.Commands.CreateTodoItem;
-using CartingService.Application.TodoItems.Commands.DeleteTodoItem;
 
 namespace CartingService.Web.Endpoints;
 

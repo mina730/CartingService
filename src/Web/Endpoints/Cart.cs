@@ -1,7 +1,6 @@
 ﻿
 using CartingService.Application.Carts.Queries.GetCartItemsList;
 using CartingService.Application.Common.Models;
-using CartingService.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 
 namespace CartingService.Web.Endpoints;
 

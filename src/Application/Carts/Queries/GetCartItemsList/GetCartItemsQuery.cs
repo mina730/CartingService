@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CartingService.Application.Common.Interfaces;
 using CartingService.Application.Common.Models;
-using CartingService.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 
 namespace CartingService.Application.Carts.Queries.GetCartItemsList;
 public record GetCartItemsQuery : IRequest<CartDto>
