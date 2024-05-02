@@ -6,6 +6,17 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="TodoItems\Commands\DeleteTodoItemTests.cs" />
+      <Compile Remove="TodoItems\Commands\UpdateTodoItemDetailTests.cs" />
+      <Compile Remove="TodoItems\Commands\UpdateTodoItemTests.cs" />
+      <Compile Remove="TodoLists\Commands\CreateTodoListTests.cs" />
+      <Compile Remove="TodoLists\Commands\DeleteTodoListTests.cs" />
+      <Compile Remove="TodoLists\Commands\PurgeTodoListsTests.cs" />
+      <Compile Remove="TodoLists\Commands\UpdateTodoListTests.cs" />
+      <Compile Remove="TodoLists\Queries\GetTodosTests.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
       <None Remove="appsettings.json" />
     </ItemGroup>
 
@@ -38,6 +49,11 @@
     
     <ItemGroup>
         <ProjectReference Include="..\..\src\Web\Web.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="TodoLists\Commands\" />
+      <Folder Include="TodoLists\Queries\" />
     </ItemGroup>
 
 </Project>
