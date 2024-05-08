@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/Cart": {
+    "/api/Cart/{cartId}": {
       "get": {
         "tags": [
           "Cart"
@@ -14,8 +14,9 @@
         "operationId": "GetCartItems",
         "parameters": [
           {
-            "name": "CartId",
-            "in": "query",
+            "name": "cartId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string",
               "nullable": true
@@ -37,12 +38,55 @@
         }
       }
     },
-    "/api/CartItems": {
+    "/api/Cart": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "operationId": "AddCart",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCartCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CartItems/cart/{cartId}": {
       "post": {
         "tags": [
           "CartItems"
         ],
         "operationId": "AddNewItem",
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
         "requestBody": {
           "x-name": "command",
           "content": {
@@ -53,7 +97,7 @@
             }
           },
           "required": true,
-          "x-position": 1
+          "x-position": 2
         },
         "responses": {
           "200": {
@@ -137,6 +181,16 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "AddCartCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cartId": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

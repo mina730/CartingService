@@ -9,7 +9,7 @@ using CartingService.Domain.Entities;
 namespace CartingService.Application.CartItems.Commands.AddCartItemCommand;
 public record AddItemToTheCartCommand : IRequest<int>
 {
-    public string? CartId { get; init; }
+    public string? CartId { get; set; }
 
     public string? Name { get; init; }
     public string? ImageURL { get; init; }
