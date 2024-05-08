@@ -25,11 +25,24 @@ public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, CartD
 
     public async Task<CartDto> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
     {
-        var cartDto = await _context.Carts.Include(c => c.ItemList)
+        //if (String.IsNullOrEmpty(request.CartId))
+        //{
+        //    throw new ArgumentNullException(request.CartId, "CartId cannot be empty");
+        //}
+        Guard.Against.NullOrEmpty(request.CartId);
+
+        var cart = await _context.Carts.Include(c => c.ItemList)
             .FirstOrDefaultAsync(x => x.CartId == request.CartId);
 
-        var cart = _mapper.Map<CartDto>(cartDto);
-        return cart;
+        Guard.Against.NotFound(request.CartId, cart);
+
+        //if (cartDto == null)
+        //{
+        //    throw new NotFoundException(request.CartId??"", "Cart");
+        //}
+
+        var cartDto = _mapper.Map<CartDto>(cart);
+        return cartDto;
     }
 }
 

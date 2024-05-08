@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CartingService.Application.Common.Interfaces;
 using CartingService.Domain.Entities;
 
-namespace CartingService.Application.CartItems.Commands;
+namespace CartingService.Application.Carts.Commands.AddCart;
 public record AddCartCommand : IRequest<string?>
 {
     public string? CartId { get; init; }
@@ -25,7 +25,7 @@ class AddCartCommandHandler : IRequestHandler<AddCartCommand, string?>
     {
         var entity = new Cart
         {
-            CartId=request.CartId
+            CartId = request.CartId
         };
 
         _context.Carts.Add(entity);

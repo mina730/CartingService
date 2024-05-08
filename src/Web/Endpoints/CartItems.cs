@@ -1,4 +1,5 @@
 ﻿using CartingService.Application.CartItems.Commands;
+using CartingService.Application.CartItems.Commands.AddCartItemCommand;
 
 namespace CartingService.Web.Endpoints;
 
