@@ -25,9 +25,10 @@ public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, CartD
 
     public async Task<CartDto> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
     {
-        var x = await _context.Carts.Include(c => c.ItemList)
+        var cartDto = await _context.Carts.Include(c => c.ItemList)
             .FirstOrDefaultAsync(x => x.CartId == request.CartId);
-        var cart = _mapper.Map<CartDto>(x);
+
+        var cart = _mapper.Map<CartDto>(cartDto);
         return cart;
     }
 }
