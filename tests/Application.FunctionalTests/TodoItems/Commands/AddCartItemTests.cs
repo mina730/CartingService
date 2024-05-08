@@ -1,8 +1,7 @@
-﻿using CartingService.Application.CartItems.Commands;
-using CartingService.Application.Carts.Queries.GetCartItemsList;
+﻿using CartingService.Application.CartItems.Commands.AddCartItemCommand;
 using CartingService.Application.Common.Exceptions;
 using CartingService.Domain.Entities;
-
+using CartingService.Application.Carts.Commands.AddCart;
 namespace CartingService.Application.FunctionalTests.TodoItems.Commands;
 
 using static Testing;
