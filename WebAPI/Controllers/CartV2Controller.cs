@@ -3,48 +3,50 @@ using CartingService.Application.CartItems.Commands;
 using CartingService.Application.CartItems.Commands.AddCartItemCommand;
 using CartingService.Application.Carts.Commands.AddCart;
 using CartingService.Application.Carts.Queries.GetCartItemsList;
+using CartingService.Application.Carts.Queries.GetCartItemsOnlyList;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebAPI.Controllers;
-[ApiVersion(1)]
-[Route("v{version:apiVersion}/[controller]")]
+[Route("v{version:apiVersion}/Cart")]
 [ApiController]
-public class CartController : ControllerBase
+[ApiVersion(2)]
+public class CartV2Controller : ControllerBase
 {
     readonly ISender _sender;
-    public CartController(ISender sender)
+    readonly CartController v1Controller;
+    public CartV2Controller(ISender sender)
     {
+        v1Controller=new CartController(sender);
         _sender = sender;
     }
     [HttpGet]
-    public Task<CartDto> Get([FromQuery] GetCartItemsQuery query)
+    public Task<CartItemsOnlyDto> Get([FromQuery] GetCartItemsOnlyQuery query)
     {
         return _sender.Send(query);
     }
     [HttpPost]
     public Task<string?> AddCart(AddCartCommand command)
     {
-        return _sender.Send(command);
+        return v1Controller.AddCart(command);
     }
 
     [HttpPost]
     [Route("{cartId}/Item")]
     public Task<int> AddItem([FromRoute(Name = "cartId")] string cartId, AddItemToTheCartCommand command)
     {
-        command.CartId = cartId;//ignore what in the object and add the item into cartId in the QueryString
-        return _sender.Send(command);
+        return v1Controller.AddItem(cartId, command);
     }
     [HttpDelete]
     [Route("{cartId}/Item/{itemId}")]
     public Task<int> Item([FromRoute(Name = "cartId")] string cartId
         , [FromRoute(Name = "itemId")] int itemId)
     {
-        var id = _sender.Send(new RemoveItemCartCommand() { CartId = cartId, ItemId = itemId });
-        return id;
+        return v1Controller.Item(cartId, itemId);
     }
 }

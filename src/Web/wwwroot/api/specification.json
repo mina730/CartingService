@@ -114,13 +114,22 @@
         }
       }
     },
-    "/api/CartItems/{id}": {
+    "/api/CartItems/cart/{cartId}/item/{id}": {
       "delete": {
         "tags": [
           "CartItems"
         ],
         "operationId": "DeleteItem",
         "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
           {
             "name": "id",
             "in": "path",
@@ -129,7 +138,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 1
+            "x-position": 2
           }
         ],
         "responses": {
@@ -162,6 +171,10 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
             "type": "string",
             "nullable": true

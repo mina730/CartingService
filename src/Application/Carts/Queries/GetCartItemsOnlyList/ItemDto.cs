@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ObjectiveC;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using CartingService.Domain.Entities;
 
-namespace CartingService.Application.Carts.Queries.GetCartItemsList;
+namespace CartingService.Application.Carts.Queries.GetCartItemsOnlyList;
 public class ItemDto
 {
     public int Id { get; init; }
