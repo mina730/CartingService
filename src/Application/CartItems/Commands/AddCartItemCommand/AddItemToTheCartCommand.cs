@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CartingService.Application.Carts.Commands.AddCart;
 using CartingService.Application.Common.Interfaces;
 using CartingService.Domain.Entities;
 
@@ -30,10 +31,16 @@ class AddItemToTheCartCommandHandler : IRequestHandler<AddItemToTheCartCommand, 
     public async Task<int> Handle(AddItemToTheCartCommand request, CancellationToken cancellationToken)
     {
         Guard.Against.NullOrEmpty(request.CartId);
-
         var cart = await _context.Carts.Include(c => c.ItemList)
             .FirstOrDefaultAsync(x => x.CartId == request.CartId);
-
+        if (cart == null) {
+            AddCartCommand command=new AddCartCommand() { 
+            CartId=request.CartId};
+            AddCartCommandHandler cartHandler = new AddCartCommandHandler(_context);
+            var cartId = await cartHandler.Handle(command,cancellationToken);
+            cart = await _context.Carts.Include(c => c.ItemList)
+            .FirstOrDefaultAsync(x => x.CartId == request.CartId);
+        }
         Guard.Against.NotFound(request.CartId, cart);
         var entity = new Item
         {
