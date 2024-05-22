@@ -21,17 +21,33 @@ public class CartController : ControllerBase
     {
         _sender = sender;
     }
+    /// <summary>
+    /// Get Cart Model and its Items list
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
     [HttpGet]
     public Task<CartDto> Get([FromQuery] GetCartItemsQuery query)
     {
         return _sender.Send(query);
     }
+
+    /// <summary>
+    /// Add a new cart
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
     [HttpPost]
     public Task<string?> AddCart(AddCartCommand command)
     {
         return _sender.Send(command);
     }
-
+    /// <summary>
+    /// Add an Item in a specific cart
+    /// </summary>
+    /// <param name="cartId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
     [HttpPost]
     [Route("{cartId}/Item")]
     public Task<int> AddItem([FromRoute(Name = "cartId")] string cartId, AddItemToTheCartCommand command)
@@ -39,6 +55,12 @@ public class CartController : ControllerBase
         command.CartId = cartId;//ignore what in the object and add the item into cartId in the QueryString
         return _sender.Send(command);
     }
+    /// <summary>
+    /// Delete an a item from a specific cart
+    /// </summary>
+    /// <param name="cartId"></param>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
     [HttpDelete]
     [Route("{cartId}/Item/{itemId}")]
     public Task<int> Item([FromRoute(Name = "cartId")] string cartId

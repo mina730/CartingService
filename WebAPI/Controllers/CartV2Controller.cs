@@ -25,23 +25,47 @@ public class CartV2Controller : ControllerBase
         v1Controller=new CartController(sender);
         _sender = sender;
     }
+    /// <summary>
+    /// Get Item list in a specific cart
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
     [HttpGet]
     public Task<CartItemsOnlyDto> Get([FromQuery] GetCartItemsOnlyQuery query)
     {
         return _sender.Send(query);
     }
+
+    /// <summary>
+    /// Add a new cart
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
     [HttpPost]
     public Task<string?> AddCart(AddCartCommand command)
     {
         return v1Controller.AddCart(command);
     }
 
+    /// <summary>
+    /// Add an Item in a specific cart
+    /// </summary>
+    /// <param name="cartId"></param>
+    /// <param name="command"></param>
+    /// <returns></returns>
     [HttpPost]
     [Route("{cartId}/Item")]
     public Task<int> AddItem([FromRoute(Name = "cartId")] string cartId, AddItemToTheCartCommand command)
     {
         return v1Controller.AddItem(cartId, command);
     }
+
+    /// <summary>
+    /// Delete an a item from a specific cart
+    /// </summary>
+    /// <param name="cartId"></param>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
     [HttpDelete]
     [Route("{cartId}/Item/{itemId}")]
     public Task<int> Item([FromRoute(Name = "cartId")] string cartId
