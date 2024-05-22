@@ -5,11 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using CartingService.Application.Common.Interfaces;
 using CartingService.Domain.Entities;
+using MediatR;
 
 namespace CartingService.Application.CartItems.Commands;
-public record RemoveItemCartCommand(int Id) : IRequest;
+public record RemoveItemCartCommand : IRequest<int>
+{
+    public int ItemId;
+    public string? CartId;
+}
 
-public class RemoveItemCartCommandHandler : IRequestHandler<RemoveItemCartCommand>
+public class RemoveItemCartCommandHandler : IRequestHandler<RemoveItemCartCommand, int>
 {
     private readonly IApplicationDbContext _context;
 
@@ -18,15 +23,14 @@ public class RemoveItemCartCommandHandler : IRequestHandler<RemoveItemCartComman
         _context = context;
     }
 
-    public async Task Handle(RemoveItemCartCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(RemoveItemCartCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Items
-            .FindAsync(request.Id, cancellationToken);
-        Guard.Against.NotFound(request.Id, entity);
+            .FirstOrDefaultAsync(x => x.Id == request.ItemId && x.CartId == request.CartId);
+        Guard.Against.NotFound(request.ItemId, entity);
 
         _context.Items.Remove(entity);
 
-        await _context.SaveChangesAsync(cancellationToken);
-
+        return await _context.SaveChangesAsync(cancellationToken);
     }
 }
