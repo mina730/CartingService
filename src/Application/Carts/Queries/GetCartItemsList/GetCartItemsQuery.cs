@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CartingService.Application.Common.Interfaces;
+using CartingService.Application.Common.Mappings;
 using CartingService.Application.Common.Models;
 
 namespace CartingService.Application.Carts.Queries.GetCartItemsList;
 public record GetCartItemsQuery : IRequest<CartDto>
 {
     public string? CartId { get; init; }
+    public int PageNumber { get; init; } = 1;
+    public int PageSize { get; init; } = 10;
 
 }
 public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, CartDto>
@@ -25,23 +28,25 @@ public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, CartD
 
     public async Task<CartDto> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
     {
-        //if (String.IsNullOrEmpty(request.CartId))
-        //{
-        //    throw new ArgumentNullException(request.CartId, "CartId cannot be empty");
-        //}
         Guard.Against.NullOrEmpty(request.CartId);
 
-        var cart = await _context.Carts.Include(c => c.ItemList)
+        var cart = await _context.Carts
             .FirstOrDefaultAsync(x => x.CartId == request.CartId);
-
         Guard.Against.NotFound(request.CartId, cart);
 
-        //if (cartDto == null)
-        //{
-        //    throw new NotFoundException(request.CartId??"", "Cart");
-        //}
+        var items = await _context.Items.Where(item => item.CartId == cart!.CartId)
+            .PaginatedListAsync(request.PageNumber, request.PageSize);
+        Console.WriteLine($"item count:{items.Items.Count}");
+        if (items != null && items.Items.Count > 0)
+        {
+            foreach ( var item in items.Items )
+            {
+                cart.ItemList.Add(item);
+            }
+        }
 
         var cartDto = _mapper.Map<CartDto>(cart);
+        Console.WriteLine($"Cart item count:{cartDto.ItemList.Count}");
         return cartDto;
     }
 }
