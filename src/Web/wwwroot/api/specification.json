@@ -152,48 +152,96 @@
   "components": {
     "schemas": {
       "CartDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LinkResourceBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "cartId": {
+                "type": "string",
+                "nullable": true
+              },
+              "itemList": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ItemDto"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ItemDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LinkResourceBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "name": {
+                "type": "string",
+                "nullable": true
+              },
+              "imageURL": {
+                "type": "string",
+                "nullable": true
+              },
+              "imageText": {
+                "type": "string",
+                "nullable": true
+              },
+              "price": {
+                "type": "number",
+                "format": "float"
+              },
+              "quantity": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "LinkResourceBase": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "cartId": {
-            "type": "string",
-            "nullable": true
-          },
-          "itemList": {
+          "links": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ItemDto"
+              "$ref": "#/components/schemas/Link"
             }
           }
         }
       },
-      "ItemDto": {
+      "Link": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
+          "href": {
             "type": "string",
             "nullable": true
           },
-          "imageURL": {
+          "rel": {
             "type": "string",
             "nullable": true
           },
-          "imageText": {
+          "method": {
             "type": "string",
             "nullable": true
           },
-          "price": {
-            "type": "number",
-            "format": "float"
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
+          "type": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

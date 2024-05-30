@@ -1,8 +1,9 @@
 ﻿
+using CartingService.Application.Common.Models;
 using CartingService.Domain.Entities;
 
 namespace CartingService.Application.Carts.Queries.GetCartItemsOnlyList;
-public class CartItemsOnlyDto
+public class CartItemsOnlyDto : LinkResourceBase
 {
     public CartItemsOnlyDto()
     {

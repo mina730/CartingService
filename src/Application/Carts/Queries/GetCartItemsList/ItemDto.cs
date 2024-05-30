@@ -4,10 +4,11 @@ using System.Linq;
 using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using System.Threading.Tasks;
+using CartingService.Application.Common.Models;
 using CartingService.Domain.Entities;
 
 namespace CartingService.Application.Carts.Queries.GetCartItemsList;
-public class ItemDto
+public class ItemDto : LinkResourceBase
 {
     public int Id { get; init; }
     public string? Name { get; init; }

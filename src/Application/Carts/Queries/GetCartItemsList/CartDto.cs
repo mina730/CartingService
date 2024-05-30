@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CartingService.Application.Common.Models;
 using CartingService.Domain.Entities;
 
 namespace CartingService.Application.Carts.Queries.GetCartItemsList;
-public class CartDto
+public class CartDto : LinkResourceBase
 {
     public CartDto()
     {
